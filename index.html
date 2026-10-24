@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#b9cdea">
+<title>Convite · Letícia Maria · 15 anos</title>
+<meta property="og:title" content="Convite · Letícia Maria · 15 anos">
+<meta property="og:description" content="Era uma vez uma noite que merece ser lembrada para sempre. Abra o convite.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ratio:941/1672;
+  --ink:#43538c;
+  --ink-soft:#6b7bb0;
+  --ice:#e9f0fb;
+  --ice-deep:#cfdef3;
+  --silver:#ffffff;
+  --accent:#6f8bc9;
+  --script:'Great Vibes','Brush Script MT',cursive;
+  --serif:'Cormorant Garamond',Georgia,serif;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;height:100%;overflow:hidden;background:#b9cdea;overscroll-behavior:none;-webkit-text-size-adjust:100%}
+body{font-family:var(--serif);color:var(--ink);-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+button{font:inherit;color:inherit}
+
+/* ---------- telas ---------- */
+.screen{
+  position:fixed;inset:0;overflow:hidden;
+  opacity:0;visibility:hidden;
+  transition:opacity .8s ease,visibility 0s linear .8s;
+}
+.screen.active{opacity:1;visibility:visible;transition:opacity .8s ease,visibility 0s}
+.bg{position:absolute;inset:-6%;background-size:cover;background-position:center;filter:blur(26px) saturate(1.1);transform:scale(1.08)}
+.stage{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:min(100vw,calc(100vh * .5628));
+  width:min(100vw,calc(100dvh * .5628));
+  aspect-ratio:var(--ratio);
+}
+.stage>img,.stage>video{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;user-select:none;-webkit-user-drag:none}
+
+/* ---------- capa ---------- */
+#cover{cursor:pointer}
+#cover .stage{outline:none}
+.gem{
+  position:absolute;left:49.4%;top:53.6%;width:28%;aspect-ratio:1;transform:translate(-50%,-50%);
+  border-radius:50%;pointer-events:none;mix-blend-mode:screen;
+  background:radial-gradient(circle,rgba(255,255,255,.7) 0%,rgba(190,215,255,.28) 38%,rgba(190,215,255,0) 68%);
+  animation:glow 3s ease-in-out infinite;
+}
+@keyframes glow{0%,100%{opacity:.25;transform:translate(-50%,-50%) scale(.85)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}}
+.pill{
+  position:absolute;left:50%;transform:translateX(-50%);
+  display:inline-flex;align-items:center;justify-content:center;gap:.4em;
+  min-height:56px;padding:6px 34px 10px;
+  border-radius:999px;border:1.5px solid rgba(255,255,255,.95);
+  background:linear-gradient(180deg,rgba(255,255,255,.82),rgba(208,224,247,.78));
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  box-shadow:0 8px 24px rgba(60,80,140,.35),inset 0 0 0 1px rgba(160,182,222,.7);
+  color:var(--ink);font-family:var(--script);font-size:clamp(26px,7.4vw,34px);line-height:1;white-space:nowrap;cursor:pointer;
+}
+.pill:active{transform:translateX(-50%) scale(.97)}
+.pill:focus-visible{outline:3px solid #fff;outline-offset:3px}
+#cover .pill{top:81.5%;animation:float 2.6s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-7px)}}
+
+/* ---------- vídeo ---------- */
+#video{background:#0d1530}
+#video .bg{filter:blur(30px) brightness(.75)}
+.skip{
+  position:fixed;left:50%;transform:translateX(-50%);
+  bottom:calc(18px + env(safe-area-inset-bottom,0px));
+  min-height:44px;padding:8px 22px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.55);background:rgba(20,30,60,.35);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  color:#fff;font-family:var(--serif);font-weight:700;font-size:17px;letter-spacing:.06em;cursor:pointer;
+  opacity:0;transition:opacity .6s ease;
+}
+.skip.show{opacity:.85}
+.skip:focus-visible{outline:3px solid #fff;outline-offset:2px}
+
+/* ---------- botões sobre a imagem ---------- */
+.hot{
+  position:absolute;left:var(--x);top:var(--y);width:19.6%;aspect-ratio:1;
+  transform:translate(-50%,-50%);border-radius:50%;border:0;padding:0;margin:0;
+  background:transparent;cursor:pointer;display:block;text-decoration:none;
+}
+.hot::after{
+  content:"";position:absolute;inset:-2%;border-radius:50%;pointer-events:none;
+  border:2px solid rgba(255,255,255,.9);box-shadow:0 0 14px 3px rgba(255,255,255,.75);
+  opacity:0;animation:ring 3.4s ease-out infinite;animation-delay:var(--d,0s);
+}
+@keyframes ring{0%{opacity:0;transform:scale(.9)}22%{opacity:.95}100%{opacity:0;transform:scale(1.2)}}
+.hot:active{background:rgba(255,255,255,.3)}
+.hot:focus-visible{outline:3px solid #fff;outline-offset:3px}
+#gifts .pill{top:80.4%}
+
+/* ---------- música ---------- */
+.music{
+  position:fixed;z-index:30;top:calc(12px + env(safe-area-inset-top,0px));right:calc(12px + env(safe-area-inset-right,0px));
+  width:46px;height:46px;border-radius:50%;padding:0;cursor:pointer;
+  border:1.5px solid rgba(255,255,255,.95);
+  background:linear-gradient(180deg,rgba(255,255,255,.85),rgba(208,224,247,.8));
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  box-shadow:0 4px 14px rgba(60,80,140,.35);color:var(--ink);
+  display:grid;place-items:center;
+}
+.music svg{width:22px;height:22px;display:block}
+.music .off{display:none}
+.music[aria-pressed="false"] .on{display:none}
+.music[aria-pressed="false"] .off{display:block}
+.music:focus-visible{outline:3px solid #fff;outline-offset:2px}
+
+/* ---------- aviso do WhatsApp ---------- */
+.overlay{
+  position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:20px;
+  background:rgba(28,40,84,.55);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);
+  opacity:0;visibility:hidden;transition:opacity .35s ease,visibility 0s linear .35s;
+}
+.overlay.open{opacity:1;visibility:visible;transition:opacity .35s ease,visibility 0s}
+.card{
+  width:min(100%,360px);padding:30px 24px 24px;text-align:center;
+  border-radius:24px;border:2px solid #fff;
+  background:linear-gradient(180deg,#f7faff 0%,#dbe7f8 100%);
+  box-shadow:0 0 0 1px rgba(150,172,214,.8),0 24px 60px rgba(20,30,70,.5);
+  transform:translateY(14px) scale(.97);transition:transform .35s ease;
+}
+.overlay.open .card{transform:none}
+.card h2{margin:0 0 6px;font-family:var(--script);font-weight:400;font-size:44px;line-height:1.05;color:var(--ink)}
+.card p{margin:0 0 22px;font-size:20px;line-height:1.35;font-weight:600;color:#4c5b92}
+.actions{display:grid;gap:10px}
+.btn{
+  display:flex;align-items:center;justify-content:center;min-height:50px;padding:8px 20px;border-radius:999px;
+  font-family:var(--serif);font-weight:700;font-size:20px;letter-spacing:.04em;text-decoration:none;cursor:pointer;
+}
+.btn.primary{border:0;color:#fff;background:linear-gradient(180deg,#86a0da,#5f7cc0);box-shadow:0 6px 16px rgba(70,95,160,.4)}
+.btn.ghost{border:1.5px solid #8ea4d4;background:transparent;color:var(--ink)}
+.btn:focus-visible{outline:3px solid #fff;outline-offset:2px;box-shadow:0 0 0 5px var(--accent)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
+  .hot::after{opacity:0}
+}
+</style>
+</head>
+<body>
+
+<!-- 1 · capa -->
+<section class="screen active" id="cover" role="button" tabindex="0" aria-label="Clique para abrir o convite">
+  <div class="bg" style="background-image:url(assets/capa.jpg)"></div>
+  <div class="stage">
+    <img src="assets/capa.jpg" alt="Envelope azul com joias e um sapatinho de cristal" width="941" height="1672" decoding="async" fetchpriority="high">
+    <span class="gem" aria-hidden="true"></span>
+    <span class="pill">Clique para abrir</span>
+  </div>
+</section>
+
+<!-- 2 · vídeo de abertura -->
+<section class="screen" id="video" aria-hidden="true">
+  <div class="bg" style="background-image:url(assets/capa.jpg)"></div>
+  <div class="stage">
+    <video id="vid" src="assets/abertura.mp4" poster="assets/capa.jpg" muted playsinline webkit-playsinline preload="auto"></video>
+  </div>
+  <button class="skip" id="skip" type="button">Pular</button>
+</section>
+
+<!-- 3 · informações -->
+<section class="screen" id="info" aria-hidden="true">
+  <div class="bg" style="background-image:url(assets/informacoes.jpg)"></div>
+  <div class="stage">
+    <img src="assets/informacoes.jpg" alt="Convite de Letícia Maria, 15 anos. Dia 3 de fevereiro, às 19 horas. Escolha uma das opções abaixo: confirmar presença, localização ou dicas de presentes." width="941" height="1672" decoding="async">
+    <button class="hot" id="btn-confirm" type="button" style="--x:29.54%;--y:75.48%;--d:0s" aria-label="Confirmar presença"></button>
+    <a class="hot" id="btn-map" target="_blank" rel="noopener noreferrer" style="--x:49.95%;--y:75.48%;--d:.5s" aria-label="Localização: Buffet Giro Encantado" href="#"></a>
+    <button class="hot" id="btn-gifts" type="button" style="--x:70.35%;--y:75.48%;--d:1s" aria-label="Dicas de presentes"></button>
+  </div>
+</section>
+
+<!-- 4 · presentes -->
+<section class="screen" id="gifts" aria-hidden="true">
+  <div class="bg" style="background-image:url(assets/presentes.jpg)"></div>
+  <div class="stage">
+    <img src="assets/presentes.jpg" alt="Dicas para presentear: perfumes doces, maquiagem e cosméticos, blusa tamanho M e shorts 38." width="941" height="1672" decoding="async">
+    <button class="pill" id="btn-back" type="button">Voltar</button>
+  </div>
+</section>
+
+<!-- música -->
+<button class="music" id="music" type="button" aria-pressed="true" aria-label="Pausar música" hidden>
+  <svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3" fill="currentColor"/><circle cx="17" cy="16" r="3" fill="currentColor"/></svg>
+  <svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3" fill="currentColor"/><circle cx="17" cy="16" r="3" fill="currentColor"/><path d="M3 3l18 18"/></svg>
+</button>
+<audio id="audio" src="assets/musica.m4a" loop preload="auto"></audio>
+
+<!-- aviso antes de abrir o WhatsApp -->
+<div class="overlay" id="overlay" aria-hidden="true">
+  <div class="card" role="dialog" aria-modal="true" aria-labelledby="dlg-title" aria-describedby="dlg-text">
+    <h2 id="dlg-title">Confirmar presença</h2>
+    <p id="dlg-text">Você será direcionado ao WhatsApp para confirmar sua presença.</p>
+    <div class="actions">
+      <a class="btn primary" id="dlg-ok" target="_blank" rel="noopener noreferrer" href="#">OK</a>
+      <button class="btn ghost" id="dlg-close" type="button">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  /* ====== dados do convite ====== */
+  var CONFIG={
+    whatsapp:'5585996354515',
+    mensagem:'Olá! Quero confirmar minha presença no aniversário de 15 anos da Letícia Maria (dia 3 de fevereiro, às 19h). Meu nome é: ',
+    local:'Buffet Giro Encantado'
+  };
+
+  var $=function(s){return document.querySelector(s)};
+  var screens={cover:$('#cover'),video:$('#video'),info:$('#info'),gifts:$('#gifts')};
+  var vid=$('#vid'),audio=$('#audio'),musicBtn=$('#music'),skip=$('#skip');
+  var overlay=$('#overlay'),dlgOk=$('#dlg-ok'),dlgClose=$('#dlg-close');
+  var current='cover',started=false,wantMusic=false,lastFocus=null;
+
+  /* links */
+  $('#btn-map').href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(CONFIG.local);
+  dlgOk.href='https://wa.me/'+CONFIG.whatsapp+'?text='+encodeURIComponent(CONFIG.mensagem);
+
+  /* troca de tela */
+  function go(name){
+    current=name;
+    Object.keys(screens).forEach(function(k){
+      var el=screens[k],on=k===name;
+      el.classList.toggle('active',on);
+      el.setAttribute('aria-hidden',on?'false':'true');
+      if('inert' in el) el.inert=!on;
+    });
+  }
+  go('cover');
+
+  /* pré-carrega as próximas telas */
+  ['assets/informacoes.jpg','assets/presentes.jpg'].forEach(function(src){var i=new Image();i.src=src});
+
+  /* ====== música ====== */
+  function setMusicUI(playing){
+    musicBtn.setAttribute('aria-pressed',playing?'true':'false');
+    musicBtn.setAttribute('aria-label',playing?'Pausar música':'Tocar música');
+  }
+  function playMusic(){
+    wantMusic=true;
+    var p=audio.play();
+    if(p&&p.then){p.then(function(){setMusicUI(true)},function(){setMusicUI(false)})}else{setMusicUI(!audio.paused)}
+  }
+  musicBtn.addEventListener('click',function(){
+    if(!audio.paused){wantMusic=false;audio.pause();setMusicUI(false)}else{playMusic()}
+  });
+  /* volta a tocar se o navegador pausou ao trocar de aba */
+  document.addEventListener('visibilitychange',function(){
+    if(!document.hidden&&wantMusic&&audio.paused&&started){playMusic()}
+  });
+  /* suaviza a emenda quando a música recomeça (onde o navegador permite mexer no volume) */
+  var canFade=false;
+  try{audio.volume=.5;canFade=audio.volume===.5;audio.volume=1}catch(e){}
+  if(canFade){
+    var faded=false;
+    (function tick(){
+      var d=audio.duration,t=audio.currentTime;
+      if(d&&isFinite(d)&&!audio.paused){
+        var v=1;
+        if(d-t<1.2){v=Math.max(0,(d-t)/1.2);faded=true}
+        else if(faded&&t<1.2){v=Math.min(1,t/1.2)}
+        audio.volume=v;
+      }
+      requestAnimationFrame(tick);
+    })();
+  }
+
+  /* ====== fluxo ====== */
+  function toInfo(){if(current==='video'){go('info');vid.pause()}}
+  function start(){
+    if(started)return;
+    started=true;
+    go('video');
+    musicBtn.hidden=false;
+    playMusic();
+    try{vid.currentTime=0}catch(e){}
+    var p=vid.play();
+    if(p&&p.catch){p.catch(toInfo)}
+    setTimeout(function(){skip.classList.add('show')},1500);
+    /* se o vídeo não andar, segue para as informações */
+    setTimeout(function(){if(current==='video'&&vid.currentTime<.1)toInfo()},7000);
+  }
+  screens.cover.addEventListener('click',start);
+  screens.cover.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();start()}});
+  vid.addEventListener('ended',toInfo);
+  vid.addEventListener('error',toInfo);
+  skip.addEventListener('click',toInfo);
+
+  $('#btn-gifts').addEventListener('click',function(){go('gifts')});
+  $('#btn-back').addEventListener('click',function(){go('info')});
+
+  /* ====== aviso do WhatsApp ====== */
+  function openDialog(){
+    lastFocus=document.activeElement;
+    overlay.classList.add('open');overlay.setAttribute('aria-hidden','false');
+    setTimeout(function(){dlgOk.focus()},50);
+  }
+  function closeDialog(){
+    overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');
+    if(lastFocus&&lastFocus.focus)lastFocus.focus();
+  }
+  $('#btn-confirm').addEventListener('click',openDialog);
+  dlgClose.addEventListener('click',closeDialog);
+  dlgOk.addEventListener('click',function(){setTimeout(closeDialog,200)});
+  overlay.addEventListener('click',function(e){if(e.target===overlay)closeDialog()});
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&overlay.classList.contains('open'))closeDialog();
+    if(e.key==='Tab'&&overlay.classList.contains('open')){
+      var f=[dlgOk,dlgClose],i=f.indexOf(document.activeElement);
+      e.preventDefault();f[(i+(e.shiftKey?-1:1)+f.length)%f.length].focus();
+    }
+  });
+})();
+</script>
+</body>
+</html>
