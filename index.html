@@ -35,7 +35,8 @@ button{font:inherit;color:inherit}
   transition:opacity .8s ease,visibility 0s linear .8s;
 }
 .screen.active{opacity:1;visibility:visible;transition:opacity .8s ease,visibility 0s}
-.bg{position:absolute;inset:-6%;background-size:cover;background-position:center;filter:blur(26px) saturate(1.1);transform:scale(1.08)}
+.bg{display:none;position:absolute;inset:-6%;background-size:cover;background-position:center;filter:blur(26px) saturate(1.1);transform:scale(1.08)}
+@media (min-aspect-ratio:5628/10000){.bg{display:block}}
 .stage{
   position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
   /* ocupa a altura toda; em celulares mais estreitos que a imagem, as laterais ficam um pouco além da tela */
@@ -50,7 +51,7 @@ button{font:inherit;color:inherit}
 #cover .stage{outline:none}
 .gem{
   position:absolute;left:49.4%;top:53.6%;width:28%;aspect-ratio:1;transform:translate(-50%,-50%);
-  border-radius:50%;pointer-events:none;mix-blend-mode:screen;
+  border-radius:50%;pointer-events:none;
   background:radial-gradient(circle,rgba(255,255,255,.7) 0%,rgba(190,215,255,.28) 38%,rgba(190,215,255,0) 68%);
   animation:glow 3s ease-in-out infinite;
 }
@@ -60,8 +61,7 @@ button{font:inherit;color:inherit}
   display:inline-flex;align-items:center;justify-content:center;gap:.6em;
   min-height:36px;padding:2px 22px 5px;
   border-radius:999px;border:1px solid rgba(255,255,255,.85);
-  background:linear-gradient(180deg,rgba(255,255,255,.42),rgba(220,233,250,.28));
-  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  background:linear-gradient(180deg,rgba(255,255,255,.6),rgba(220,233,250,.46));
   box-shadow:0 4px 16px rgba(70,90,150,.22),inset 0 1px 0 rgba(255,255,255,.75);
   color:#4a5a94;font-family:var(--script);font-size:clamp(21px,5.8vw,26px);line-height:1;white-space:nowrap;cursor:pointer;
   text-shadow:0 1px 6px rgba(255,255,255,.8);
@@ -80,8 +80,7 @@ button{font:inherit;color:inherit}
   position:fixed;left:50%;transform:translateX(-50%);
   bottom:calc(18px + env(safe-area-inset-bottom,0px));
   min-height:44px;padding:8px 22px;border-radius:999px;
-  border:1px solid rgba(255,255,255,.55);background:rgba(20,30,60,.35);
-  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  border:1px solid rgba(255,255,255,.55);background:rgba(20,30,60,.5);
   color:#fff;font-family:var(--serif);font-weight:700;font-size:17px;letter-spacing:.06em;cursor:pointer;
   opacity:0;transition:opacity .6s ease;
 }
@@ -96,7 +95,7 @@ button{font:inherit;color:inherit}
 }
 .hot::after{
   content:"";position:absolute;inset:-2%;border-radius:50%;pointer-events:none;
-  border:2px solid rgba(255,255,255,.9);box-shadow:0 0 14px 3px rgba(255,255,255,.75);
+  border:2px solid rgba(255,255,255,.9);
   opacity:0;animation:ring 3.4s ease-out infinite;animation-delay:var(--d,0s);
 }
 @keyframes ring{0%{opacity:0;transform:scale(.9)}22%{opacity:.95}100%{opacity:0;transform:scale(1.2)}}
@@ -109,8 +108,7 @@ button{font:inherit;color:inherit}
   position:fixed;z-index:30;top:calc(12px + env(safe-area-inset-top,0px));right:calc(12px + env(safe-area-inset-right,0px));
   width:46px;height:46px;border-radius:50%;padding:0;cursor:pointer;
   border:1.5px solid rgba(255,255,255,.95);
-  background:linear-gradient(180deg,rgba(255,255,255,.85),rgba(208,224,247,.8));
-  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(208,224,247,.88));
   box-shadow:0 4px 14px rgba(60,80,140,.35);color:var(--ink);
   display:grid;place-items:center;
 }
@@ -123,7 +121,7 @@ button{font:inherit;color:inherit}
 /* ---------- aviso do WhatsApp ---------- */
 .overlay{
   position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:20px;
-  background:rgba(28,40,84,.55);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);
+  background:rgba(28,40,84,.62);
   opacity:0;visibility:hidden;transition:opacity .35s ease,visibility 0s linear .35s;
 }
 .overlay.open{opacity:1;visibility:visible;transition:opacity .35s ease,visibility 0s}
@@ -145,6 +143,8 @@ button{font:inherit;color:inherit}
 .btn.primary{border:0;color:#fff;background:linear-gradient(180deg,#86a0da,#5f7cc0);box-shadow:0 6px 16px rgba(70,95,160,.4)}
 .btn.ghost{border:1.5px solid #8ea4d4;background:transparent;color:var(--ink)}
 .btn:focus-visible{outline:3px solid #fff;outline-offset:2px;box-shadow:0 0 0 5px var(--accent)}
+
+.screen:not(.active) *,.screen:not(.active) *::after{animation-play-state:paused!important}
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
@@ -267,21 +267,25 @@ button{font:inherit;color:inherit}
   var canFade=false;
   try{audio.volume=.5;canFade=audio.volume===.5;audio.volume=1}catch(e){}
   if(canFade){
-    var faded=false;
-    (function tick(){
+    var faded=false,lastV=1;
+    setInterval(function(){
       var d=audio.duration,t=audio.currentTime;
-      if(d&&isFinite(d)&&!audio.paused){
-        var v=1;
-        if(d-t<1.2){v=Math.max(0,(d-t)/1.2);faded=true}
-        else if(faded&&t<1.2){v=Math.min(1,t/1.2)}
-        audio.volume=v;
-      }
-      requestAnimationFrame(tick);
-    })();
+      if(!d||!isFinite(d)||audio.paused)return;
+      var v=1;
+      if(d-t<1.2){v=Math.max(0,(d-t)/1.2);faded=true}
+      else if(faded&&t<1.2){v=Math.min(1,t/1.2)}
+      if(Math.abs(v-lastV)>.02){audio.volume=v;lastV=v}
+    },100);
   }
 
   /* ====== fluxo ====== */
-  function toInfo(){if(current==='video'){go('info');vid.pause()}}
+  function toInfo(){
+    if(current==='video'){
+      go('info');vid.pause();
+      /* libera o vídeo da memória depois da troca de tela */
+      setTimeout(function(){try{vid.removeAttribute('src');vid.removeAttribute('poster');vid.load()}catch(e){}},1500);
+    }
+  }
   function start(){
     if(started)return;
     started=true;
