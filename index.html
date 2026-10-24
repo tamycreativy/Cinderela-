@@ -56,18 +56,21 @@ button{font:inherit;color:inherit}
 @keyframes glow{0%,100%{opacity:.25;transform:translate(-50%,-50%) scale(.85)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}}
 .pill{
   position:absolute;left:50%;transform:translateX(-50%);
-  display:inline-flex;align-items:center;justify-content:center;gap:.4em;
-  min-height:56px;padding:6px 34px 10px;
-  border-radius:999px;border:1.5px solid rgba(255,255,255,.95);
-  background:linear-gradient(180deg,rgba(255,255,255,.82),rgba(208,224,247,.78));
-  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
-  box-shadow:0 8px 24px rgba(60,80,140,.35),inset 0 0 0 1px rgba(160,182,222,.7);
-  color:var(--ink);font-family:var(--script);font-size:clamp(26px,7.4vw,34px);line-height:1;white-space:nowrap;cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;gap:.6em;
+  min-height:36px;padding:2px 22px 5px;
+  border-radius:999px;border:1px solid rgba(255,255,255,.85);
+  background:linear-gradient(180deg,rgba(255,255,255,.42),rgba(220,233,250,.28));
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  box-shadow:0 4px 16px rgba(70,90,150,.22),inset 0 1px 0 rgba(255,255,255,.75);
+  color:#4a5a94;font-family:var(--script);font-size:clamp(21px,5.8vw,26px);line-height:1;white-space:nowrap;cursor:pointer;
+  text-shadow:0 1px 6px rgba(255,255,255,.8);
 }
+.pill::before{content:"";position:absolute;inset:-9px -8px}
+.pill i{font-style:normal;font-family:var(--serif);font-size:.5em;opacity:.75;transform:translateY(1px)}
 .pill:active{transform:translateX(-50%) scale(.97)}
-.pill:focus-visible{outline:3px solid #fff;outline-offset:3px}
-#cover .pill{top:81.5%;animation:float 2.6s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-7px)}}
+.pill:focus-visible{outline:2px solid #fff;outline-offset:4px}
+#cover .pill{top:90%;animation:soft 3.2s ease-in-out infinite}
+@keyframes soft{0%,100%{opacity:.78}50%{opacity:1}}
 
 /* ---------- vídeo ---------- */
 #video{background:#0d1530}
@@ -98,7 +101,7 @@ button{font:inherit;color:inherit}
 @keyframes ring{0%{opacity:0;transform:scale(.9)}22%{opacity:.95}100%{opacity:0;transform:scale(1.2)}}
 .hot:active{background:rgba(255,255,255,.3)}
 .hot:focus-visible{outline:3px solid #fff;outline-offset:3px}
-#gifts .pill{top:80.4%}
+#gifts .pill{top:94.5%}
 
 /* ---------- música ---------- */
 .music{
@@ -156,7 +159,7 @@ button{font:inherit;color:inherit}
   <div class="stage">
     <img src="assets/capa.jpg" alt="Envelope azul com joias e um sapatinho de cristal" width="941" height="1672" decoding="async" fetchpriority="high">
     <span class="gem" aria-hidden="true"></span>
-    <span class="pill">Clique para abrir</span>
+    <span class="pill"><i>✦</i>Clique para abrir<i>✦</i></span>
   </div>
 </section>
 
@@ -185,7 +188,7 @@ button{font:inherit;color:inherit}
   <div class="bg" style="background-image:url(assets/presentes.jpg)"></div>
   <div class="stage">
     <img src="assets/presentes.jpg" alt="Dicas para presentear: perfumes doces, maquiagem e cosméticos, blusa tamanho M e shorts 38." width="941" height="1672" decoding="async">
-    <button class="pill" id="btn-back" type="button">Voltar</button>
+    <button class="pill" id="btn-back" type="button"><i>✦</i>Voltar<i>✦</i></button>
   </div>
 </section>
 
