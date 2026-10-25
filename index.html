@@ -32,7 +32,7 @@ button{font:inherit;color:inherit}
 .screen{
   position:fixed;inset:0;overflow:hidden;
   opacity:0;visibility:hidden;
-  transition:opacity .8s ease,visibility 0s linear .8s;
+  transition:opacity 0s linear .8s,visibility 0s linear .8s;
 }
 .screen.active{opacity:1;visibility:visible;transition:opacity .8s ease,visibility 0s}
 .bg{display:none;position:absolute;inset:-6%;background-size:cover;background-position:center;filter:blur(26px) saturate(1.1);transform:scale(1.08)}
@@ -70,14 +70,13 @@ button{font:inherit;color:inherit}
 .pill i{font-style:normal;font-family:var(--serif);font-size:.5em;opacity:.75;transform:translateY(1px)}
 .pill:active{transform:translateX(-50%) scale(.97)}
 .pill:focus-visible{outline:2px solid #fff;outline-offset:4px}
-#cover .pill{top:90%;animation:soft 3.2s ease-in-out infinite}
-@keyframes soft{0%,100%{opacity:.78}50%{opacity:1}}
+#cover .pill{top:90%}
 
 /* ---------- vídeo ---------- */
 #video{background:#0d1530}
 #video .bg{filter:blur(30px) brightness(.75)}
 .skip{
-  position:fixed;left:50%;transform:translateX(-50%);
+  position:fixed;z-index:40;left:50%;transform:translateX(-50%);
   bottom:calc(18px + env(safe-area-inset-bottom,0px));
   min-height:44px;padding:8px 22px;border-radius:999px;
   border:1px solid rgba(255,255,255,.55);background:rgba(20,30,60,.5);
@@ -93,12 +92,6 @@ button{font:inherit;color:inherit}
   transform:translate(-50%,-50%);border-radius:50%;border:0;padding:0;margin:0;
   background:transparent;cursor:pointer;display:block;text-decoration:none;
 }
-.hot::after{
-  content:"";position:absolute;inset:-2%;border-radius:50%;pointer-events:none;
-  border:2px solid rgba(255,255,255,.9);
-  opacity:0;animation:ring 3.4s ease-out infinite;animation-delay:var(--d,0s);
-}
-@keyframes ring{0%{opacity:0;transform:scale(.9)}22%{opacity:.95}100%{opacity:0;transform:scale(1.2)}}
 .hot:active{background:rgba(255,255,255,.3)}
 .hot:focus-visible{outline:3px solid #fff;outline-offset:3px}
 #gifts .pill{top:94.5%}
@@ -237,6 +230,7 @@ button{font:inherit;color:inherit}
     Object.keys(screens).forEach(function(k){
       var el=screens[k],on=k===name;
       el.classList.toggle('active',on);
+      el.style.zIndex=on?10:5;
       el.setAttribute('aria-hidden',on?'false':'true');
       if('inert' in el) el.inert=!on;
     });
@@ -282,6 +276,7 @@ button{font:inherit;color:inherit}
   function toInfo(){
     if(current==='video'){
       go('info');vid.pause();
+      skip.classList.remove('show');skip.hidden=true;
       /* libera o vídeo da memória depois da troca de tela */
       setTimeout(function(){try{vid.removeAttribute('src');vid.removeAttribute('poster');vid.load()}catch(e){}},1500);
     }
@@ -295,7 +290,7 @@ button{font:inherit;color:inherit}
     try{vid.currentTime=0}catch(e){}
     var p=vid.play();
     if(p&&p.catch){p.catch(toInfo)}
-    setTimeout(function(){skip.classList.add('show')},1500);
+    setTimeout(function(){if(current==='video')skip.classList.add('show')},1500);
     /* se o vídeo não andar, segue para as informações */
     setTimeout(function(){if(current==='video'&&vid.currentTime<.1)toInfo()},7000);
   }
